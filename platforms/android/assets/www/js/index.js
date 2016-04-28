@@ -46,16 +46,23 @@ var app = {
         // The NDEF listener runs in the foreground
         nfc.addNdefListener(app.onNfc, success, failure);
 
-        nfc.addMimeTypeListener('text/pg', app.onNfc, success, failure);
+        nfc.addMimeTypeListener('text/pg', app.onNdef, success, failure);
+
+    },
+    onNdef: function(nfcEvent) {
+        var tag = nfcEvent.tag,
+            ndefMessage = tag.ndefMessage;
+
+        var productCode = nfc.bytesToString(ndefMessage[0].payload).substring(0);
+
+        alert("onNdef: " + productCode);
 
     },
     onNfc: function(nfcEvent) {
         var tag = nfcEvent.tag,
             ndefMessage = tag.ndefMessage;
 
-        alert(JSON.stringify(ndefMessage));
-
-        alert(nfc.bytesToString(ndefMessage[0].payload).substring(1));
+        alert("onNfc: " + nfc.bytesToString(ndefMessage[0].payload).substring(0));
 
     },
     // Update DOM on a Received Event

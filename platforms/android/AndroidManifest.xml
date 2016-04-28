@@ -11,7 +11,7 @@
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:host="example.com" android:pathPrefix="" android:scheme="http" />
+                <data android:mimeType="text/pg" />
             </intent-filter>
         </activity>
     </application>
