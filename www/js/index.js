@@ -36,15 +36,12 @@ var app = {
         app.receivedEvent('deviceready');
 
         var success = function() {
-            alert("addNdefListener success");
+            console.log("addNdefListener success");
         };
 
         var failure = function(reason) {
             alert("addNdefListener failed " + reason);
         }
-
-        // The NDEF listener runs in the foreground
-        nfc.addNdefListener(app.onNfc, success, failure);
 
         nfc.addMimeTypeListener('text/pg', app.onNdef, success, failure);
 
@@ -55,14 +52,10 @@ var app = {
 
         var productCode = nfc.bytesToString(ndefMessage[0].payload).substring(0);
 
+        navigator.vibrate(100);
+
         alert("onNdef: " + productCode);
 
-    },
-    onNfc: function(nfcEvent) {
-        var tag = nfcEvent.tag,
-            ndefMessage = tag.ndefMessage;
-
-        alert("onNfc: " + nfc.bytesToString(ndefMessage[0].payload).substring(0));
 
     },
     // Update DOM on a Received Event
