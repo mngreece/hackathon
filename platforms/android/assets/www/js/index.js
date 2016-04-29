@@ -54,21 +54,57 @@ var app = {
 
         navigator.vibrate(100);
 
-        alert("onNdef: " + productCode);
-
+        addToList(productCode);
 
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
     }
 };
 
 app.initialize();
+
+function addToList(pnum){
+
+    $.getJSON('http://clients.easymode.com.au/hackathon/'+pnum+'.json', function (data) {
+         var ProductNumber = data.response.ProductNumber;
+         var Title = data.response.Title;
+         var Brand = data.response.Brand;
+         var SubBrand = data.response.SubBrand;
+         var Thumbnail = data.response.Thumbnail;
+         var URLSegment = data.response.URLSegment;
+         var ProductLink = "http://reece.com.au/bathrooms/products/"+URLSegment;
+         var html = '<li class="swipeout">'+
+                    '<div class="item-content swipeout-content">'+
+                      '<div class="item-media"><i class="icon icon-f7"></i></div>'+
+                      '<div class="item-inner">'+
+                        '<div class="item-title">'+Title+'</div>'+
+                        '<div class="item-after">'+Brand+'</div>'+
+                        '<img width="80px" src="'+Thumbnail+'" />'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div>'+
+                  '</li>';
+
+            var card = '<li class="swipeout">'+
+                    '<div class="item-content swipeout-content">'+
+                    '<div class="card ks-card-header-pic">'+
+                    '<div style="background-image:url('+Thumbnail+')" valign="bottom" class="card-header color-white no-border">'+Title+'</div>'+
+                        '<div class="card-content">'+
+                            '<div class="card-content-inner">'+
+                                '<p class="color-gray">ProductNumber: '+ProductNumber+'</p>'+
+                                '<p>Title: '+Title+'</p>'+
+                                '<p>Brand: '+Brand+' / '+SubBrand+'</p>'+
+                            '</div>'+
+                        '</div>'+
+                    '<div class="card-footer"><a href="'+ProductLink+'" class="link">Read more</a></div>'+
+                '</div>'+
+                    '<div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div>'+
+                  '</li>';
+
+         $(".wishlist").append(card);
+    });;
+
+}
