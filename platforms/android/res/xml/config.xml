@@ -44,4 +44,5 @@
     <allow-intent href="geo:*" />
     <allow-navigation href="*" />
     <preference name="SplashScreenDelay" value="5000" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
 </widget>
